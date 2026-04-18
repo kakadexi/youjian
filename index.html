@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>✨卡卡的西✨临时邮箱 · 玻璃极简</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* 玻璃质感核心变量 + iOS通透基调 */
+        :root {
+            --glass-bg-light: rgba(255, 255, 255, 0.55);
+            --glass-bg-dark: rgba(20, 25, 45, 0.65);
+            --glass-border-light: rgba(255, 255, 255, 0.45);
+            --glass-border-dark: rgba(255, 255, 255, 0.12);
+            --shadow-soft: 0 12px 35px -12px rgba(0, 0, 0, 0.2), 0 0 0 0.5px rgba(255, 255, 255, 0.2) inset;
+            --text-primary-light: #1c2a44;
+            --text-secondary-light: #4a5b7a;
+            --accent-glow: rgba(96, 165, 250, 0.5);
+            --card-radius: 34px;
+            --element-radius: 44px;
+        }
+
+        body {
+            font-family: -apple-system, 'SF Pro Text', 'Segoe UI', system-ui, Helvetica, sans-serif;
+            background: radial-gradient(circle at 10% 20%, rgba(210, 225, 245, 0.9), rgba(175, 195, 230, 0.7));
+            min-height: 100vh;
+            color: var(--text-primary-light);
+            backdrop-filter: blur(2px);
+            transition: background 0.3s, color 0.2s;
+        }
+
+        /* 暗色模式 深邃玻璃 */
+        body.dark {
+            background: radial-gradient(circle at 70% 15%, #11162a, #070b17);
+            color: #f0f3fc;
+        }
+
+        body.dark :root {
+            --text-primary-light: #f0f3fc;
+            --text-secondary-light: #b9c3dd;
+        }
+
+        /* 所有卡片毛玻璃效果 */
+        .glass-card {
+            background: var(--glass-bg-light);
+            backdrop-filter: blur(28px) saturate(180%);
+            -webkit-backdrop-filter: blur(28px) saturate(180%);
+            border-radius: var(--card-radius);
+            border: 1px solid var(--glass-border-light);
+            box-shadow: var(--shadow-soft);
+            transition: all 0.25s ease;
+        }
+
+        body.dark .glass-card {
+            background: var(--glass-bg-dark);
+            border: 1px solid var(--glass-border-dark);
+            box-shadow: 0 15px 40px -15px rgba(0, 0, 0, 0.4), 0 0 0 0.5px rgba(255, 255, 255, 0.05) inset;
+        }
+
+        /* 容器布局 (无跑马灯，顶部清爽) */
+        .container {
+            max-width: 780px;
+            margin: 0 auto;
+            padding: 70px 20px 40px;
+        }
+
+        /* 头像区域 - 极简玻璃圆 */
+        .avatar-glow {
+            width: 92px;
+            height: 92px;
+            margin: 12px auto 14px;
+            background: linear-gradient(145deg, #ffffffb3, #ffffff40);
+            backdrop-filter: blur(12px);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.2rem;
+            font-weight: 600;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1), 0 0 0 2px rgba(255, 255, 255, 0.5);
+            transition: 0.2s;
+            color: #2c3e66;
+        }
+
+        body.dark .avatar-glow {
+            background: rgba(45, 55, 85, 0.7);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4), 0 0 0 2px rgba(255, 255, 255, 0.15);
+            color: #eef5ff;
+        }
+
+        /* 主标题渐变 + ✨ 环绕 */
+        .glow-title {
+            font-size: 2.4rem;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+            background: linear-gradient(135deg, #FFB347, #FF6A88, #A36CFF, #3F87F5);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer 4s linear infinite;
+            display: inline-block;
+            padding: 0 8px;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+
+        /* 邮箱地址条 */
+        .mail-display {
+            background: rgba(255, 255, 255, 0.45);
+            backdrop-filter: blur(16px);
+            padding: 14px 20px;
+            border-radius: 80px;
+            font-family: 'SF Mono', monospace;
+            font-size: 1rem;
+            font-weight: 540;
+            margin: 20px 0;
+            border: 0.5px solid rgba(255, 255, 255, 0.7);
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.02), 0 4px 12px rgba(0,0,0,0.05);
+            word-break: break-all;
+            text-align: center;
+            color: var(--text-primary-light);
+        }
+
+        body.dark .mail-display {
+            background: rgba(0, 0, 0, 0.45);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* 按钮玻璃组 */
+        .btn-group {
+            display: flex;
+            gap: 14px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            min-width: 120px;
+            padding: 12px 24px;
+            border-radius: 60px;
+            font-weight: 590;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            border: none;
+            background: rgba(245, 248, 255, 0.7);
+            backdrop-filter: blur(12px);
+            color: #1e2f4b;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+            border: 0.5px solid rgba(255,255,240,0.6);
+        }
+
+        body.dark .btn {
+            background: rgba(35, 45, 70, 0.7);
+            color: #eef2ff;
+            border-color: rgba(255,255,255,0.15);
+        }
+
+        .btn-p {
+            background: linear-gradient(115deg, #2b4f8c, #1e3a5f);
+            color: white;
+            border: none;
+            box-shadow: 0 6px 14px rgba(30, 60, 114, 0.25);
+        }
+
+        body.dark .btn-p {
+            background: linear-gradient(115deg, #3b6ea8, #2c5282);
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.4);
+        }
+
+        .btn:active {
+            transform: scale(0.96);
+        }
+
+        /* 收件箱卡片区域 */
+        .results-container {
+            margin-top: 26px;
+            padding: 18px 20px 24px;
+            min-height: 340px;
+        }
+
+        .results-title {
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+            margin-bottom: 20px;
+            padding-left: 12px;
+            border-left: 4px solid #ff9f4a;
+            color: var(--text-secondary-light);
+        }
+
+        /* 邮件条目玻璃质感 */
+        .msg-item {
+            background: rgba(255, 255, 255, 0.35);
+            backdrop-filter: blur(16px);
+            border-radius: 28px;
+            padding: 18px 22px;
+            margin-bottom: 16px;
+            border: 0.5px solid rgba(255,255,245,0.6);
+            transition: all 0.2s ease;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+        }
+
+        body.dark .msg-item {
+            background: rgba(30, 38, 60, 0.55);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .msg-item:hover {
+            transform: translateY(-3px);
+            background: rgba(255, 255, 255, 0.65);
+            border-color: rgba(255,215,140,0.7);
+            box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.2);
+        }
+
+        body.dark .msg-item:hover {
+            background: rgba(55, 70, 100, 0.75);
+        }
+
+        .msg-meta {
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #c95a0f;
+            margin-bottom: 6px;
+            letter-spacing: -0.2px;
+        }
+
+        body.dark .msg-meta {
+            color: #ffb45e;
+        }
+
+        .msg-subject {
+            font-weight: 670;
+            font-size: 1.05rem;
+            color: var(--text-primary-light);
+            margin-bottom: 6px;
+        }
+
+        /* 模态框 - iOS 全玻璃弹窗 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.45);
+            backdrop-filter: blur(28px);
+            z-index: 200;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: rgba(245, 248, 253, 0.92);
+            backdrop-filter: blur(35px);
+            width: 100%;
+            max-width: 680px;
+            height: 85vh;
+            border-radius: 48px;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgba(255,255,245,0.7);
+            box-shadow: 0 25px 50px -12px black;
+            overflow: hidden;
+        }
+
+        body.dark .modal-content {
+            background: rgba(18, 24, 40, 0.92);
+            border-color: rgba(255,255,255,0.2);
+        }
+
+        .modal-header {
+            padding: 20px 28px;
+            border-bottom: 0.5px solid rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: transparent;
+        }
+
+        body.dark .modal-header {
+            border-bottom-color: rgba(255,255,255,0.1);
+        }
+
+        .modal-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 24px 28px;
+            color: #1f2a44;
+            background: rgba(255, 255, 255, 0.8);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        body.dark .modal-body {
+            background: rgba(30, 35, 55, 0.9);
+            color: #eef2ff;
+        }
+
+        .close-btn {
+            background: rgba(150, 170, 200, 0.3);
+            backdrop-filter: blur(8px);
+            border: none;
+            padding: 8px 24px;
+            border-radius: 50px;
+            font-weight: 590;
+            cursor: pointer;
+            color: var(--text-primary-light);
+        }
+
+        /* 音乐播放器 & 主题切换 iOS 风格 */
+        .music-player {
+            position: fixed;
+            bottom: 26px;
+            right: 26px;
+            z-index: 102;
+        }
+
+        .music-toggle {
+            width: 54px;
+            height: 54px;
+            border-radius: 50%;
+            background: rgba(255,255,245,0.7);
+            backdrop-filter: blur(20px);
+            border: 0.5px solid rgba(255,255,255,0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            transition: 0.2s;
+        }
+
+        body.dark .music-toggle {
+            background: rgba(30, 38, 58, 0.7);
+            border-color: rgba(255,255,255,0.25);
+        }
+
+        .music-toggle.playing {
+            animation: vinylSpin 5s linear infinite;
+        }
+
+        @keyframes vinylSpin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 22px;
+            right: 22px;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: rgba(255,255,245,0.65);
+            backdrop-filter: blur(20px);
+            border: 0.5px solid rgba(255,255,255,0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 101;
+            font-size: 1.6rem;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+        }
+
+        body.dark .theme-toggle {
+            background: rgba(30, 38, 58, 0.7);
+        }
+
+        /* 邮件列表占位 */
+        .empty-placeholder {
+            text-align: center;
+            padding: 55px 20px;
+            color: var(--text-secondary-light);
+            font-weight: 450;
+            backdrop-filter: blur(4px);
+        }
+
+        @media (max-width: 640px) {
+            .container { padding: 60px 18px 30px; }
+            .glow-title { font-size: 1.9rem; }
+            .btn { min-width: 108px; padding: 10px 16px; }
+            .msg-item { padding: 14px 18px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 主题切换按钮 iOS 风格 -->
+    <div class="theme-toggle" id="themeToggle">🌙</div>
+
+    <div class="container">
+        <div class="glass-card search-header" style="text-align: center; padding: 32px 28px;">
+            <!-- 自定义玻璃头像 ✨卡✨ -->
+            <div class="avatar-glow">
+                ✨🎩✨
+            </div>
+            <h1>
+                <span class="glow-title">✨卡卡的西✨</span>
+            </h1>
+            <p style="color: var(--text-secondary-light); font-size: 0.85rem; margin-top: 8px; font-weight: 470;">
+                🍃 玻璃瞬焚 · 隐私守护 · 纯粹极简
+            </p>
+            <div id="addr" class="mail-display">🌀 初始化加密邮箱...</div>
+            <div class="btn-group">
+                <button onclick="copyMail()" class="btn">📋 复制地址</button>
+                <button id="refreshBtn" onclick="resetAndInit()" class="btn btn-p">🔄 更换地址</button>
+            </div>
+        </div>
+
+        <div class="results-container glass-card">
+            <div class="results-title">📬 实时收件箱 · 阅后即隐</div>
+            <div id="list">
+                <div class="empty-placeholder">✨ 等待新邮件飘入 ✨</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 邮件详情模态窗 -->
+    <div id="mailModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span id="modalSubject" style="font-weight: 620; font-size: 1.1rem; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; max-width: 70%;">📩 邮件详情</span>
+                <button class="close-btn" onclick="closeMail()">关闭</button>
+            </div>
+            <div id="modalBody" class="modal-body">✨ 加载梦幻内容中 ✨</div>
+        </div>
+    </div>
+
+    <!-- 音乐播放器 -->
+    <div class="music-player">
+        <div class="music-toggle" id="musicToggle">🎧</div>
+    </div>
+    <audio id="bgm" loop preload="auto" src="https://mpimg.cn/view.php/13d63b273afac14ec9989057a4e3f94b.mp3"></audio>
+
+    <script>
+        // ---------- 临时邮箱核心 ----------
+        const API_KEY = 'vmail_at6AmSu4dEkuJG4bafc8qhSqBctCMW9q';
+        const PROXY = 'https://proxy.api.030101.xyz/https://vmail.dev/api/v1';
+        let mid = null;
+        let isInitializing = false;
+        let currentMailboxAddress = '';
+
+        // 重置并全新初始化（更换地址）
+        async function resetAndInit() {
+            if (isInitializing) return;
+            mid = null;
+            await init(3);
+        }
+
+        async function init(retries = 3) {
+            if (isInitializing && retries === 3) return;
+            isInitializing = true;
+            const addrEl = document.getElementById('addr');
+            const listEl = document.getElementById('list');
+            addrEl.innerText = "⚡ 生成新邮箱中...";
+            listEl.innerHTML = '<div class="empty-placeholder">🔄 正在创建玻璃邮箱，请稍候</div>';
+            try {
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 12000);
+                const r = await fetch(`${PROXY}/mailboxes`, {
+                    method: 'POST',
+                    headers: { 'X-API-Key': API_KEY, 'Content-Type': 'application/json' },
+                    signal: controller.signal
+                });
+                clearTimeout(timeoutId);
+                if (!r.ok) throw new Error(`API响应错误 ${r.status}`);
+                const { data } = await r.json();
+                mid = data.id;
+                currentMailboxAddress = data.address;
+                addrEl.innerText = currentMailboxAddress;
+                listEl.innerHTML = '<div class="empty-placeholder">📭 邮箱已就绪 · 新邮件将实时显示</div>';
+                // 立即拉取一次消息
+                await refreshMessages();
+            } catch (e) {
+                console.warn(e);
+                if (retries > 0) {
+                    setTimeout(() => init(retries - 1), 1200);
+                } else {
+                    addrEl.innerText = "⚠️ 生成失败，请检查网络后点击「更换地址」";
+                    listEl.innerHTML = '<div class="empty-placeholder">❌ 服务临时波动，点上方按钮重试</div>';
+                    isInitializing = false;
+                }
+                return;
+            }
+            isInitializing = false;
+        }
+
+        // 刷新邮件列表
+        async function refreshMessages() {
+            if (!mid || isInitializing) return;
+            try {
+                const r = await fetch(`${PROXY}/mailboxes/${mid}/messages`, {
+                    headers: { 'X-API-Key': API_KEY }
+                });
+                if (!r.ok) return;
+                const { data } = await r.json();
+                const box = document.getElementById('list');
+                if (!data || data.length === 0) {
+                    if (box.innerHTML.includes('msg-item')) return;
+                    box.innerHTML = '<div class="empty-placeholder">📭 暂无邮件 · 快用复制地址接收吧 ✨</div>';
+                    return;
+                }
+                // 渲染邮件列表 (倒序展示最新的在上方)
+                const reversed = [...data].reverse();
+                box.innerHTML = reversed.map(m => `
+                    <div class="msg-item" onclick="viewMail('${m.id}', '${escapeHtml(m.subject || '无主题')}')">
+                        <div class="msg-meta">✉️ 来自: ${escapeHtml(m.from?.address || '未知')} · ${new Date(m.receivedAt).toLocaleTimeString()}</div>
+                        <div class="msg-subject">${escapeHtml(m.subject || '（无主题）')}</div>
+                        <div style="font-size:0.8rem; color:var(--text-secondary-light); margin-top: 8px; opacity:0.9;">✨ ${escapeHtml(m.preview || '轻触卡片阅读完整内容')} ✨</div>
+                    </div>
+                `).join('');
+            } catch (e) {
+                // 静默失败
+            }
+        }
+
+        // 简易XSS防护
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str.replace(/[&<>]/g, function(m) {
+                if (m === '&') return '&amp;';
+                if (m === '<') return '&lt;';
+                if (m === '>') return '&gt;';
+                return m;
+            }).replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, function(c) {
+                return c;
+            });
+        }
+
+        // 查看邮件详情 (玻璃弹窗)
+        async function viewMail(msgId, subject) {
+            const modal = document.getElementById('mailModal');
+            const mBody = document.getElementById('modalBody');
+            const mSub = document.getElementById('modalSubject');
+            mSub.innerText = subject || '邮件内容';
+            mBody.innerHTML = '<div style="text-align:center;padding:40px;">🌀 正在取回信件内容 ...</div>';
+            modal.style.display = 'flex';
+            if (!mid) {
+                mBody.innerHTML = '<div style="text-align:center;padding:40px;">⚠️ 邮箱未就绪，请稍后重试</div>';
+                return;
+            }
+            try {
+                const r = await fetch(`${PROXY}/mailboxes/${mid}/messages/${msgId}`, {
+                    headers: { 'X-API-Key': API_KEY }
+                });
+                if (!r.ok) throw new Error();
+                const { data } = await r.json();
+                // 优先展示HTML，否则纯文本
+                let content = '';
+                if (data.html) {
+                    content = data.html;
+                } else if (data.text) {
+                    content = `<div style="white-space: pre-wrap; font-family: -apple-system;">${escapeHtml(data.text)}</div>`;
+                } else {
+                    content = '<div>✨ 这封邮件似乎只有元数据，但意境已达 ✨</div>';
+                }
+                mBody.innerHTML = content;
+            } catch (err) {
+                mBody.innerHTML = '<div style="text-align:center;padding:40px;">❌ 拉取详情失败，可能是网络波动，点击关闭再试～</div>';
+            }
+        }
+
+        function closeMail() {
+            document.getElementById('mailModal').style.display = 'none';
+        }
+
+        function copyMail() {
+            const val = document.getElementById('addr').innerText;
+            if (val && val.includes('@') && val !== '初始化服务中...' && !val.includes('⚠️')) {
+                navigator.clipboard.writeText(val).then(() => {
+                    // iOS风格提示
+                    const tip = document.createElement('div');
+                    tip.innerText = '✨ 地址已复制，阅后即焚 ✨';
+                    tip.style.position = 'fixed';
+                    tip.style.bottom = '100px';
+                    tip.style.left = '50%';
+                    tip.style.transform = 'translateX(-50%)';
+                    tip.style.backgroundColor = 'rgba(0,0,0,0.7)';
+                    tip.style.backdropFilter = 'blur(20px)';
+                    tip.style.color = 'white';
+                    tip.style.padding = '10px 20px';
+                    tip.style.borderRadius = '40px';
+                    tip.style.fontSize = '14px';
+                    tip.style.zIndex = '999';
+                    tip.style.fontWeight = '500';
+                    document.body.appendChild(tip);
+                    setTimeout(() => tip.remove(), 1800);
+                }).catch(() => alert("复制失败，手动选取复制吧"));
+            } else {
+                alert("邮箱地址未生成，请等待或点击更换地址");
+            }
+        }
+
+        // 主题切换 (保持玻璃质感)
+        const themeBtn = document.getElementById('themeToggle');
+        themeBtn.onclick = () => {
+            document.body.classList.toggle('dark');
+            const isDark = document.body.classList.contains('dark');
+            themeBtn.textContent = isDark ? '☀️' : '🌙';
+        };
+
+        // ---------- 音乐播放器逻辑 (优雅自动播放策略) ----------
+        const music = document.getElementById('bgm');
+        const mToggle = document.getElementById('musicToggle');
+        let musicPlayAttempted = false;
+
+        mToggle.onclick = (e) => {
+            e.stopPropagation();
+            if (music.paused) {
+                music.play().then(() => {
+                    mToggle.classList.add('playing');
+                }).catch(() => {
+                    // 静默失败
+                });
+            } else {
+                music.pause();
+                mToggle.classList.remove('playing');
+            }
+        };
+
+        function enableMusicOnInteraction() {
+            if (musicPlayAttempted) return;
+            music.play().then(() => {
+                mToggle.classList.add('playing');
+                musicPlayAttempted = true;
+            }).catch(() => {});
+            document.removeEventListener('click', enableMusicOnInteraction);
+            document.removeEventListener('touchstart', enableMusicOnInteraction);
+        }
+        // 温和自动播放 (首次用户交互触发)
+        document.addEventListener('click', enableMusicOnInteraction, { once: true });
+        document.addEventListener('touchstart', enableMusicOnInteraction, { once: true });
+        // 页面内任何点击也确保bgm可播放，但保留once，但额外确保如果之前未播放则再次触发
+        document.body.addEventListener('click', () => {
+            if (!musicPlayAttempted && music.paused) {
+                music.play().then(() => {
+                    mToggle.classList.add('playing');
+                    musicPlayAttempted = true;
+                }).catch(() => {});
+            }
+        }, { once: false });
+
+        // 自动刷新邮件 (每5秒)
+        let refreshInterval = null;
+        function startAutoRefresh() {
+            if (refreshInterval) clearInterval(refreshInterval);
+            refreshInterval = setInterval(() => {
+                if (mid && !isInitializing) {
+                    refreshMessages();
+                }
+            }, 4800);
+        }
+
+        // 页面加载启动
+        window.addEventListener('DOMContentLoaded', () => {
+            init(3);
+            startAutoRefresh();
+        });
+
+        // 保证更换地址后刷新列表关联新mid
+        window.resetAndInit = resetAndInit;
+        window.copyMail = copyMail;
+        window.viewMail = viewMail;
+        window.closeMail = closeMail;
+    </script>
+</body>
+</html>
