@@ -63,14 +63,14 @@
             box-shadow: 0 15px 40px -15px rgba(0, 0, 0, 0.4), 0 0 0 0.5px rgba(255, 255, 255, 0.05) inset;
         }
 
-        /* 容器布局 (无跑马灯，顶部清爽) */
+        /* 容器布局 */
         .container {
             max-width: 780px;
             margin: 0 auto;
             padding: 70px 20px 40px;
         }
 
-        /* 头像区域 - 极简玻璃圆 */
+        /* 头像区域 - GIF动效 */
         .avatar-glow {
             width: 92px;
             height: 92px;
@@ -81,17 +81,20 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 3.2rem;
-            font-weight: 600;
+            overflow: hidden;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1), 0 0 0 2px rgba(255, 255, 255, 0.5);
             transition: 0.2s;
-            color: #2c3e66;
+        }
+        .avatar-glow img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
         }
 
         body.dark .avatar-glow {
             background: rgba(45, 55, 85, 0.7);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4), 0 0 0 2px rgba(255, 255, 255, 0.15);
-            color: #eef5ff;
         }
 
         /* 主标题渐变 + ✨ 环绕 */
@@ -321,44 +324,7 @@
             color: var(--text-primary-light);
         }
 
-        /* 音乐播放器 & 主题切换 iOS 风格 */
-        .music-player {
-            position: fixed;
-            bottom: 26px;
-            right: 26px;
-            z-index: 102;
-        }
-
-        .music-toggle {
-            width: 54px;
-            height: 54px;
-            border-radius: 50%;
-            background: rgba(255,255,245,0.7);
-            backdrop-filter: blur(20px);
-            border: 0.5px solid rgba(255,255,255,0.8);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 26px;
-            cursor: pointer;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-            transition: 0.2s;
-        }
-
-        body.dark .music-toggle {
-            background: rgba(30, 38, 58, 0.7);
-            border-color: rgba(255,255,255,0.25);
-        }
-
-        .music-toggle.playing {
-            animation: vinylSpin 5s linear infinite;
-        }
-
-        @keyframes vinylSpin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
+        /* 主题切换按钮 */
         .theme-toggle {
             position: fixed;
             top: 22px;
@@ -406,9 +372,9 @@
 
     <div class="container">
         <div class="glass-card search-header" style="text-align: center; padding: 32px 28px;">
-            <!-- 自定义玻璃头像 ✨卡✨ -->
+            <!-- 自定义玻璃头像 GIF 动图 -->
             <div class="avatar-glow">
-                ✨🎩✨
+                <img src="https://mpimg.cn/view.php/8250a075b9a1a425410ef647221b846c.gif" alt="avatar">
             </div>
             <h1>
                 <span class="glow-title">✨卡卡的西✨</span>
@@ -441,12 +407,6 @@
             <div id="modalBody" class="modal-body">✨ 加载梦幻内容中 ✨</div>
         </div>
     </div>
-
-    <!-- 音乐播放器 -->
-    <div class="music-player">
-        <div class="music-toggle" id="musicToggle">🎧</div>
-    </div>
-    <audio id="bgm" loop preload="auto" src="https://mpimg.cn/view.php/13d63b273afac14ec9989057a4e3f94b.mp3"></audio>
 
     <script>
         // ---------- 临时邮箱核心 ----------
@@ -485,7 +445,6 @@
                 currentMailboxAddress = data.address;
                 addrEl.innerText = currentMailboxAddress;
                 listEl.innerHTML = '<div class="empty-placeholder">📭 邮箱已就绪 · 新邮件将实时显示</div>';
-                // 立即拉取一次消息
                 await refreshMessages();
             } catch (e) {
                 console.warn(e);
@@ -516,7 +475,6 @@
                     box.innerHTML = '<div class="empty-placeholder">📭 暂无邮件 · 快用复制地址接收吧 ✨</div>';
                     return;
                 }
-                // 渲染邮件列表 (倒序展示最新的在上方)
                 const reversed = [...data].reverse();
                 box.innerHTML = reversed.map(m => `
                     <div class="msg-item" onclick="viewMail('${m.id}', '${escapeHtml(m.subject || '无主题')}')">
@@ -561,7 +519,6 @@
                 });
                 if (!r.ok) throw new Error();
                 const { data } = await r.json();
-                // 优先展示HTML，否则纯文本
                 let content = '';
                 if (data.html) {
                     content = data.html;
@@ -584,7 +541,6 @@
             const val = document.getElementById('addr').innerText;
             if (val && val.includes('@') && val !== '初始化服务中...' && !val.includes('⚠️')) {
                 navigator.clipboard.writeText(val).then(() => {
-                    // iOS风格提示
                     const tip = document.createElement('div');
                     tip.innerText = '✨ 地址已复制，阅后即焚 ✨';
                     tip.style.position = 'fixed';
@@ -607,54 +563,13 @@
             }
         }
 
-        // 主题切换 (保持玻璃质感)
+        // 主题切换
         const themeBtn = document.getElementById('themeToggle');
         themeBtn.onclick = () => {
             document.body.classList.toggle('dark');
             const isDark = document.body.classList.contains('dark');
             themeBtn.textContent = isDark ? '☀️' : '🌙';
         };
-
-        // ---------- 音乐播放器逻辑 (优雅自动播放策略) ----------
-        const music = document.getElementById('bgm');
-        const mToggle = document.getElementById('musicToggle');
-        let musicPlayAttempted = false;
-
-        mToggle.onclick = (e) => {
-            e.stopPropagation();
-            if (music.paused) {
-                music.play().then(() => {
-                    mToggle.classList.add('playing');
-                }).catch(() => {
-                    // 静默失败
-                });
-            } else {
-                music.pause();
-                mToggle.classList.remove('playing');
-            }
-        };
-
-        function enableMusicOnInteraction() {
-            if (musicPlayAttempted) return;
-            music.play().then(() => {
-                mToggle.classList.add('playing');
-                musicPlayAttempted = true;
-            }).catch(() => {});
-            document.removeEventListener('click', enableMusicOnInteraction);
-            document.removeEventListener('touchstart', enableMusicOnInteraction);
-        }
-        // 温和自动播放 (首次用户交互触发)
-        document.addEventListener('click', enableMusicOnInteraction, { once: true });
-        document.addEventListener('touchstart', enableMusicOnInteraction, { once: true });
-        // 页面内任何点击也确保bgm可播放，但保留once，但额外确保如果之前未播放则再次触发
-        document.body.addEventListener('click', () => {
-            if (!musicPlayAttempted && music.paused) {
-                music.play().then(() => {
-                    mToggle.classList.add('playing');
-                    musicPlayAttempted = true;
-                }).catch(() => {});
-            }
-        }, { once: false });
 
         // 自动刷新邮件 (每5秒)
         let refreshInterval = null;
@@ -673,7 +588,6 @@
             startAutoRefresh();
         });
 
-        // 保证更换地址后刷新列表关联新mid
         window.resetAndInit = resetAndInit;
         window.copyMail = copyMail;
         window.viewMail = viewMail;
