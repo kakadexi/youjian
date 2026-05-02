@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>✨卡卡的西✨临时邮箱 · 玻璃极简</title>
+    <title>✨卡卡的西✨ · 玻璃时空邮箱</title>
     <style>
         * {
             margin: 0;
@@ -12,104 +12,108 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* 玻璃质感核心变量 + iOS通透基调 */
+        /* 玻璃质感核心变量 —— iOS通透基调 */
         :root {
-            --glass-bg-light: rgba(255, 255, 255, 0.55);
-            --glass-bg-dark: rgba(20, 25, 45, 0.65);
-            --glass-border-light: rgba(255, 255, 255, 0.45);
-            --glass-border-dark: rgba(255, 255, 255, 0.12);
-            --shadow-soft: 0 12px 35px -12px rgba(0, 0, 0, 0.2), 0 0 0 0.5px rgba(255, 255, 255, 0.2) inset;
-            --text-primary-light: #1c2a44;
-            --text-secondary-light: #4a5b7a;
-            --accent-glow: rgba(96, 165, 250, 0.5);
-            --card-radius: 34px;
-            --element-radius: 44px;
+            --glass-white: rgba(255, 255, 255, 0.55);
+            --glass-dark: rgba(20, 25, 45, 0.68);
+            --border-light: rgba(255, 255, 255, 0.5);
+            --border-dark: rgba(255, 255, 255, 0.12);
+            --shadow-soft: 0 15px 35px -12px rgba(0, 0, 0, 0.2), 0 0 0 0.5px rgba(255, 255, 255, 0.3) inset;
+            --text-light: #1a2c3e;
+            --text-secondary-light: #4e6a8a;
+            --accent-gold: #ff9f4a;
         }
 
         body {
             font-family: -apple-system, 'SF Pro Text', 'Segoe UI', system-ui, Helvetica, sans-serif;
-            background: radial-gradient(circle at 10% 20%, rgba(210, 225, 245, 0.9), rgba(175, 195, 230, 0.7));
+            background: radial-gradient(circle at 20% 30%, rgba(200, 220, 250, 0.9), rgba(160, 185, 225, 0.8));
             min-height: 100vh;
-            color: var(--text-primary-light);
+            color: var(--text-light);
             backdrop-filter: blur(2px);
             transition: background 0.3s, color 0.2s;
         }
 
-        /* 暗色模式 深邃玻璃 */
+        /* 暗色模式 · 深邃玻璃 */
         body.dark {
-            background: radial-gradient(circle at 70% 15%, #11162a, #070b17);
+            background: radial-gradient(circle at 70% 20%, #0f172f, #030617);
             color: #f0f3fc;
         }
 
-        body.dark :root {
-            --text-primary-light: #f0f3fc;
-            --text-secondary-light: #b9c3dd;
+        body.dark .glass-card,
+        body.dark .search-header,
+        body.dark .results-container,
+        body.dark .msg-item,
+        body.dark .mail-display,
+        body.dark .btn,
+        body.dark .theme-toggle {
+            --text-light: #f0f3fc;
+            --text-secondary-light: #b9c5e0;
         }
 
-        /* 所有卡片毛玻璃效果 */
+        /* 通用玻璃卡片 */
         .glass-card {
-            background: var(--glass-bg-light);
-            backdrop-filter: blur(28px) saturate(180%);
-            -webkit-backdrop-filter: blur(28px) saturate(180%);
-            border-radius: var(--card-radius);
-            border: 1px solid var(--glass-border-light);
+            background: var(--glass-white);
+            backdrop-filter: blur(26px) saturate(180%);
+            -webkit-backdrop-filter: blur(26px) saturate(180%);
+            border-radius: 36px;
+            border: 1px solid var(--border-light);
             box-shadow: var(--shadow-soft);
             transition: all 0.25s ease;
         }
 
         body.dark .glass-card {
-            background: var(--glass-bg-dark);
-            border: 1px solid var(--glass-border-dark);
-            box-shadow: 0 15px 40px -15px rgba(0, 0, 0, 0.4), 0 0 0 0.5px rgba(255, 255, 255, 0.05) inset;
+            background: var(--glass-dark);
+            border-color: var(--border-dark);
+            box-shadow: 0 12px 30px -12px rgba(0, 0, 0, 0.5), 0 0 0 0.5px rgba(255, 255, 255, 0.07) inset;
         }
 
-        /* 容器布局 */
         .container {
-            max-width: 780px;
+            max-width: 800px;
             margin: 0 auto;
-            padding: 70px 20px 40px;
+            padding: 80px 20px 40px;
         }
 
-        /* 头像区域 - GIF动效 */
-        .avatar-glow {
-            width: 92px;
-            height: 92px;
-            margin: 12px auto 14px;
-            background: linear-gradient(145deg, #ffffffb3, #ffffff40);
+        /* 头像区域 — GIF 玻璃圈 */
+        .avatar-wrapper {
+            width: 100px;
+            height: 100px;
+            margin: 8px auto 16px;
+            background: rgba(255, 255, 255, 0.35);
             backdrop-filter: blur(12px);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1), 0 0 0 2px rgba(255, 255, 255, 0.5);
+            box-shadow: 0 10px 22px rgba(0, 0, 0, 0.12), 0 0 0 3px rgba(255, 255, 255, 0.6);
             transition: 0.2s;
         }
-        .avatar-glow img {
+
+        .avatar-wrapper img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             display: block;
         }
 
-        body.dark .avatar-glow {
-            background: rgba(45, 55, 85, 0.7);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4), 0 0 0 2px rgba(255, 255, 255, 0.15);
+        body.dark .avatar-wrapper {
+            background: rgba(40, 48, 70, 0.65);
+            box-shadow: 0 10px 22px rgba(0, 0, 0, 0.3), 0 0 0 3px rgba(255, 255, 255, 0.2);
         }
 
-        /* 主标题渐变 + ✨ 环绕 */
+        /* 主标题渐变 + ✨ 璀璨 */
         .glow-title {
-            font-size: 2.4rem;
-            font-weight: 700;
-            letter-spacing: -0.3px;
-            background: linear-gradient(135deg, #FFB347, #FF6A88, #A36CFF, #3F87F5);
+            font-size: 2.5rem;
+            font-weight: 720;
+            letter-spacing: -0.5px;
+            background: linear-gradient(125deg, #FFB347, #FF6A88, #AA6FF9, #48B5FF);
             background-size: 200% auto;
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
             animation: shimmer 4s linear infinite;
             display: inline-block;
-            padding: 0 8px;
+            padding: 0 6px;
         }
 
         @keyframes shimmer {
@@ -117,21 +121,35 @@
             100% { background-position: 200% 50%; }
         }
 
-        /* 邮箱地址条 */
+        .search-header {
+            text-align: center;
+            padding: 32px 28px;
+            margin-bottom: 26px;
+        }
+
+        .subhead {
+            color: var(--text-secondary-light);
+            font-size: 0.85rem;
+            font-weight: 470;
+            margin-top: 8px;
+            letter-spacing: 0.3px;
+        }
+
+        /* 邮箱地址条 — 毛玻璃高亮 */
         .mail-display {
             background: rgba(255, 255, 255, 0.45);
-            backdrop-filter: blur(16px);
-            padding: 14px 20px;
+            backdrop-filter: blur(20px);
+            padding: 14px 24px;
             border-radius: 80px;
-            font-family: 'SF Mono', monospace;
-            font-size: 1rem;
+            font-family: 'SF Mono', 'JetBrains Mono', monospace;
+            font-size: 0.95rem;
             font-weight: 540;
-            margin: 20px 0;
+            margin: 22px 0;
             border: 0.5px solid rgba(255, 255, 255, 0.7);
-            box-shadow: inset 0 1px 2px rgba(0,0,0,0.02), 0 4px 12px rgba(0,0,0,0.05);
             word-break: break-all;
             text-align: center;
-            color: var(--text-primary-light);
+            color: var(--text-light);
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.02), 0 4px 12px rgba(0,0,0,0.03);
         }
 
         body.dark .mail-display {
@@ -139,7 +157,7 @@
             border-color: rgba(255, 255, 255, 0.2);
         }
 
-        /* 按钮玻璃组 */
+        /* 按钮组 — 清透玻璃态 */
         .btn-group {
             display: flex;
             gap: 14px;
@@ -148,109 +166,117 @@
         }
 
         .btn {
-            min-width: 120px;
-            padding: 12px 24px;
-            border-radius: 60px;
+            min-width: 125px;
+            padding: 12px 26px;
+            border-radius: 50px;
             font-weight: 590;
             font-size: 0.95rem;
             cursor: pointer;
-            transition: all 0.2s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            transition: all 0.2s ease;
             border: none;
             background: rgba(245, 248, 255, 0.7);
             backdrop-filter: blur(12px);
             color: #1e2f4b;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-            border: 0.5px solid rgba(255,255,240,0.6);
+            border: 0.5px solid rgba(255,255,240,0.7);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
         }
 
         body.dark .btn {
-            background: rgba(35, 45, 70, 0.7);
+            background: rgba(35, 45, 72, 0.7);
             color: #eef2ff;
             border-color: rgba(255,255,255,0.15);
         }
 
-        .btn-p {
-            background: linear-gradient(115deg, #2b4f8c, #1e3a5f);
+        .btn-primary {
+            background: linear-gradient(115deg, #2f5f8c, #1f4470);
             color: white;
             border: none;
             box-shadow: 0 6px 14px rgba(30, 60, 114, 0.25);
         }
 
-        body.dark .btn-p {
-            background: linear-gradient(115deg, #3b6ea8, #2c5282);
-            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.4);
+        body.dark .btn-primary {
+            background: linear-gradient(115deg, #3f75aa, #2a5888);
         }
 
         .btn:active {
             transform: scale(0.96);
         }
 
-        /* 收件箱卡片区域 */
+        /* 收件箱区域 */
         .results-container {
-            margin-top: 26px;
-            padding: 18px 20px 24px;
-            min-height: 340px;
+            padding: 20px 22px 28px;
+            min-height: 380px;
         }
 
         .results-title {
             font-size: 0.85rem;
-            font-weight: 500;
-            letter-spacing: 0.3px;
+            font-weight: 590;
             margin-bottom: 20px;
             padding-left: 12px;
-            border-left: 4px solid #ff9f4a;
+            border-left: 4px solid var(--accent-gold);
             color: var(--text-secondary-light);
+            letter-spacing: -0.2px;
         }
 
-        /* 邮件条目玻璃质感 */
+        /* 邮件卡片玻璃质感 */
         .msg-item {
-            background: rgba(255, 255, 255, 0.35);
+            background: rgba(255, 255, 255, 0.4);
             backdrop-filter: blur(16px);
             border-radius: 28px;
             padding: 18px 22px;
             margin-bottom: 16px;
-            border: 0.5px solid rgba(255,255,245,0.6);
-            transition: all 0.2s ease;
+            border: 0.5px solid rgba(255, 255, 250, 0.65);
+            transition: all 0.2s cubic-bezier(0.2, 0.9, 0.4, 1.1);
             cursor: pointer;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
         }
 
         body.dark .msg-item {
-            background: rgba(30, 38, 60, 0.55);
+            background: rgba(30, 38, 62, 0.55);
             border-color: rgba(255, 255, 255, 0.1);
         }
 
         .msg-item:hover {
             transform: translateY(-3px);
-            background: rgba(255, 255, 255, 0.65);
-            border-color: rgba(255,215,140,0.7);
-            box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 0.7);
+            border-color: rgba(255, 190, 100, 0.7);
+            box-shadow: 0 14px 28px -12px rgba(0, 0, 0, 0.18);
         }
 
         body.dark .msg-item:hover {
-            background: rgba(55, 70, 100, 0.75);
+            background: rgba(55, 70, 105, 0.75);
         }
 
-        .msg-meta {
+        .msg-from {
             font-size: 0.7rem;
             font-weight: 600;
-            color: #c95a0f;
+            color: #e07a2c;
             margin-bottom: 6px;
             letter-spacing: -0.2px;
         }
 
-        body.dark .msg-meta {
-            color: #ffb45e;
+        body.dark .msg-from {
+            color: #ffb25e;
         }
 
         .msg-subject {
-            font-weight: 670;
-            font-size: 1.05rem;
-            color: var(--text-primary-light);
+            font-weight: 680;
+            font-size: 1rem;
+            color: var(--text-light);
             margin-bottom: 6px;
         }
 
-        /* 模态框 - iOS 全玻璃弹窗 */
+        .msg-preview {
+            font-size: 0.78rem;
+            color: var(--text-secondary-light);
+            margin-top: 8px;
+            opacity: 0.85;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* 模态窗口 — iOS 高级玻璃 */
         .modal {
             display: none;
             position: fixed;
@@ -259,7 +285,7 @@
             width: 100%;
             height: 100%;
             background: rgba(0, 0, 0, 0.45);
-            backdrop-filter: blur(28px);
+            backdrop-filter: blur(32px);
             z-index: 200;
             justify-content: center;
             align-items: center;
@@ -267,27 +293,27 @@
         }
 
         .modal-content {
-            background: rgba(245, 248, 253, 0.92);
-            backdrop-filter: blur(35px);
+            background: rgba(245, 248, 253, 0.94);
+            backdrop-filter: blur(40px);
             width: 100%;
             max-width: 680px;
             height: 85vh;
             border-radius: 48px;
             display: flex;
             flex-direction: column;
-            border: 1px solid rgba(255,255,245,0.7);
+            border: 1px solid rgba(255, 255, 245, 0.8);
             box-shadow: 0 25px 50px -12px black;
             overflow: hidden;
         }
 
         body.dark .modal-content {
-            background: rgba(18, 24, 40, 0.92);
-            border-color: rgba(255,255,255,0.2);
+            background: rgba(18, 24, 44, 0.94);
+            border-color: rgba(255, 255, 255, 0.2);
         }
 
         .modal-header {
-            padding: 20px 28px;
-            border-bottom: 0.5px solid rgba(0, 0, 0, 0.1);
+            padding: 20px 26px;
+            border-bottom: 0.5px solid rgba(0, 0, 0, 0.08);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -295,21 +321,21 @@
         }
 
         body.dark .modal-header {
-            border-bottom-color: rgba(255,255,255,0.1);
+            border-bottom-color: rgba(255, 255, 255, 0.1);
         }
 
         .modal-body {
             flex: 1;
             overflow-y: auto;
             padding: 24px 28px;
+            background: rgba(255, 255, 255, 0.85);
             color: #1f2a44;
-            background: rgba(255, 255, 255, 0.8);
             font-size: 0.95rem;
             line-height: 1.5;
         }
 
         body.dark .modal-body {
-            background: rgba(30, 35, 55, 0.9);
+            background: rgba(30, 36, 58, 0.88);
             color: #eef2ff;
         }
 
@@ -321,10 +347,11 @@
             border-radius: 50px;
             font-weight: 590;
             cursor: pointer;
-            color: var(--text-primary-light);
+            color: var(--text-light);
+            transition: 0.2s;
         }
 
-        /* 主题切换按钮 */
+        /* 主题切换键 */
         .theme-toggle {
             position: fixed;
             top: 22px;
@@ -332,23 +359,23 @@
             width: 48px;
             height: 48px;
             border-radius: 50%;
-            background: rgba(255,255,245,0.65);
-            backdrop-filter: blur(20px);
-            border: 0.5px solid rgba(255,255,255,0.6);
+            background: rgba(255, 255, 245, 0.65);
+            backdrop-filter: blur(22px);
+            border: 0.5px solid rgba(255, 255, 255, 0.7);
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             z-index: 101;
             font-size: 1.6rem;
-            box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
         }
 
         body.dark .theme-toggle {
             background: rgba(30, 38, 58, 0.7);
         }
 
-        /* 邮件列表占位 */
+        /* 占位提示 */
         .empty-placeholder {
             text-align: center;
             padding: 55px 20px;
@@ -357,138 +384,237 @@
             backdrop-filter: blur(4px);
         }
 
+        /* 自适应 */
         @media (max-width: 640px) {
-            .container { padding: 60px 18px 30px; }
-            .glow-title { font-size: 1.9rem; }
-            .btn { min-width: 108px; padding: 10px 16px; }
-            .msg-item { padding: 14px 18px; }
+            .container {
+                padding-top: 70px;
+            }
+            .glow-title {
+                font-size: 2rem;
+            }
+            .btn {
+                min-width: 108px;
+                padding: 10px 18px;
+            }
+            .msg-item {
+                padding: 14px 18px;
+            }
+            .modal-content {
+                max-width: 92%;
+                height: 80vh;
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- 主题切换按钮 iOS 风格 -->
+    <!-- 主题切换按钮 -->
     <div class="theme-toggle" id="themeToggle">🌙</div>
 
     <div class="container">
-        <div class="glass-card search-header" style="text-align: center; padding: 32px 28px;">
-            <!-- 自定义玻璃头像 GIF 动图 -->
-            <div class="avatar-glow">
-                <img src="https://mpimg.cn/view.php/8250a075b9a1a425410ef647221b846c.gif" alt="avatar">
+        <div class="search-header glass-card">
+            <div class="avatar-wrapper">
+                <img src="https://mpimg.cn/view.php/8250a075b9a1a425410ef647221b846c.gif" alt="✨卡卡的西✨">
             </div>
             <h1>
                 <span class="glow-title">✨卡卡的西✨</span>
             </h1>
-            <p style="color: var(--text-secondary-light); font-size: 0.85rem; margin-top: 8px; font-weight: 470;">
-                🍃 玻璃瞬焚 · 隐私守护 · 纯粹极简
-            </p>
-            <div id="addr" class="mail-display">🌀 初始化加密邮箱...</div>
+            <p class="subhead">🍃 玻璃瞬焚 · 隐私信使 · 纯粹极简</p>
+            <div id="addr" class="mail-display">🌀 正在生成玻璃邮箱...</div>
             <div class="btn-group">
-                <button onclick="copyMail()" class="btn">📋 复制地址</button>
-                <button id="refreshBtn" onclick="resetAndInit()" class="btn btn-p">🔄 更换地址</button>
+                <button id="copyBtn" class="btn">📋 复制地址</button>
+                <button id="refreshBtn" class="btn btn-primary">🔄 更换地址</button>
             </div>
         </div>
 
         <div class="results-container glass-card">
             <div class="results-title">📬 实时收件箱 · 阅后即隐</div>
             <div id="list">
-                <div class="empty-placeholder">✨ 等待新邮件飘入 ✨</div>
+                <div class="empty-placeholder">✨ 等待新邮件如星光飘入 ✨</div>
             </div>
         </div>
     </div>
 
-    <!-- 邮件详情模态窗 -->
+    <!-- 邮件详情弹窗 -->
     <div id="mailModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <span id="modalSubject" style="font-weight: 620; font-size: 1.1rem; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; max-width: 70%;">📩 邮件详情</span>
-                <button class="close-btn" onclick="closeMail()">关闭</button>
+                <span id="modalSubject" style="font-weight: 630; font-size: 1.05rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 70%;">📩 邮件细节</span>
+                <button class="close-btn" id="closeModalBtn">关闭</button>
             </div>
-            <div id="modalBody" class="modal-body">✨ 加载梦幻内容中 ✨</div>
+            <div id="modalBody" class="modal-body">✨ 加载信件内容中 ✨</div>
         </div>
     </div>
 
     <script>
-        // ---------- 临时邮箱核心 ----------
-        const API_KEY = 'vmail_at6AmSu4dEkuJG4bafc8qhSqBctCMW9q';
-        const PROXY = 'https://proxy.api.030101.xyz/https://vmail.dev/api/v1';
-        let mid = null;
-        let isInitializing = false;
-        let currentMailboxAddress = '';
+        // --------------------------------------------------------------
+        //  ✨卡卡的西✨ 临时邮箱 (mail.tm 玻璃重构版)
+        //  功能: 创建临时邮箱, 自动轮询邮件, 阅读详情, 更换地址, 完全无音乐
+        // --------------------------------------------------------------
+        const API_BASE = "https://api.mail.tm";
+        let currentAccount = { address: "", password: "", token: "" };
+        let pollInterval = null;
+        let isRefreshing = false;
 
-        // 重置并全新初始化（更换地址）
-        async function resetAndInit() {
-            if (isInitializing) return;
-            mid = null;
-            await init(3);
+        // DOM 元素
+        const addrEl = document.getElementById('addr');
+        const listContainer = document.getElementById('list');
+        const copyBtn = document.getElementById('copyBtn');
+        const refreshBtn = document.getElementById('refreshBtn');
+        const themeToggle = document.getElementById('themeToggle');
+        const modal = document.getElementById('mailModal');
+        const modalSubject = document.getElementById('modalSubject');
+        const modalBody = document.getElementById('modalBody');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+
+        // ---------- 辅助函数 ----------
+        function showToast(msg, isError = false) {
+            const toast = document.createElement('div');
+            toast.innerText = msg;
+            toast.style.position = 'fixed';
+            toast.style.bottom = '30px';
+            toast.style.left = '50%';
+            toast.style.transform = 'translateX(-50%)';
+            toast.style.backgroundColor = isError ? 'rgba(180, 60, 50, 0.85)' : 'rgba(0, 0, 0, 0.75)';
+            toast.style.backdropFilter = 'blur(20px)';
+            toast.style.color = 'white';
+            toast.style.padding = '10px 22px';
+            toast.style.borderRadius = '44px';
+            toast.style.fontSize = '14px';
+            toast.style.fontWeight = '500';
+            toast.style.zIndex = '999';
+            toast.style.whiteSpace = 'nowrap';
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 2000);
         }
 
-        async function init(retries = 3) {
-            if (isInitializing && retries === 3) return;
-            isInitializing = true;
-            const addrEl = document.getElementById('addr');
-            const listEl = document.getElementById('list');
-            addrEl.innerText = "⚡ 生成新邮箱中...";
-            listEl.innerHTML = '<div class="empty-placeholder">🔄 正在创建玻璃邮箱，请稍候</div>';
-            try {
-                const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 12000);
-                const r = await fetch(`${PROXY}/mailboxes`, {
-                    method: 'POST',
-                    headers: { 'X-API-Key': API_KEY, 'Content-Type': 'application/json' },
-                    signal: controller.signal
-                });
-                clearTimeout(timeoutId);
-                if (!r.ok) throw new Error(`API响应错误 ${r.status}`);
-                const { data } = await r.json();
-                mid = data.id;
-                currentMailboxAddress = data.address;
-                addrEl.innerText = currentMailboxAddress;
-                listEl.innerHTML = '<div class="empty-placeholder">📭 邮箱已就绪 · 新邮件将实时显示</div>';
-                await refreshMessages();
-            } catch (e) {
-                console.warn(e);
-                if (retries > 0) {
-                    setTimeout(() => init(retries - 1), 1200);
-                } else {
-                    addrEl.innerText = "⚠️ 生成失败，请检查网络后点击「更换地址」";
-                    listEl.innerHTML = '<div class="empty-placeholder">❌ 服务临时波动，点上方按钮重试</div>';
-                    isInitializing = false;
-                }
+        // 清空邮件列表展示
+        function setEmptyList(message = "📭 暂无邮件 · 快用复制地址接收吧 ✨") {
+            listContainer.innerHTML = `<div class="empty-placeholder">${message}</div>`;
+        }
+
+        // 停止轮询
+        function stopPolling() {
+            if (pollInterval) {
+                clearInterval(pollInterval);
+                pollInterval = null;
+            }
+        }
+
+        // 渲染邮件列表 (按时间倒序:最新在上)
+        function renderMessages(messages) {
+            if (!messages || messages.length === 0) {
+                setEmptyList();
                 return;
             }
-            isInitializing = false;
+            // 按 createdAt 降序排列
+            const sorted = [...messages].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+            const html = sorted.map(msg => {
+                const fromAddr = msg.from?.address || "未知发件人";
+                const subject = msg.subject || "（无主题）";
+                const date = new Date(msg.createdAt).toLocaleString();
+                const preview = (msg.intro || subject).substring(0, 80);
+                return `
+                    <div class="msg-item" data-id="${msg.id}">
+                        <div class="msg-from">✉️ 来自: ${escapeHtml(fromAddr)} · ${date}</div>
+                        <div class="msg-subject">${escapeHtml(subject)}</div>
+                        <div class="msg-preview">✨ ${escapeHtml(preview)}...</div>
+                    </div>
+                `;
+            }).join('');
+            listContainer.innerHTML = html;
+
+            // 绑定邮件点击事件 (事件委托)
+            document.querySelectorAll('.msg-item').forEach(el => {
+                el.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const id = el.getAttribute('data-id');
+                    if (id) fetchMailDetail(id);
+                });
+            });
         }
 
-        // 刷新邮件列表
-        async function refreshMessages() {
-            if (!mid || isInitializing) return;
+        // 获取邮件列表 (基于当前token)
+        async function fetchMessages() {
+            if (!currentAccount.token) return;
             try {
-                const r = await fetch(`${PROXY}/mailboxes/${mid}/messages`, {
-                    headers: { 'X-API-Key': API_KEY }
+                const res = await fetch(`${API_BASE}/messages`, {
+                    headers: { 'Authorization': `Bearer ${currentAccount.token}` }
                 });
-                if (!r.ok) return;
-                const { data } = await r.json();
-                const box = document.getElementById('list');
-                if (!data || data.length === 0) {
-                    if (box.innerHTML.includes('msg-item')) return;
-                    box.innerHTML = '<div class="empty-placeholder">📭 暂无邮件 · 快用复制地址接收吧 ✨</div>';
+                if (!res.ok) {
+                    if (res.status === 401) {
+                        // token失效，尝试重新登陆
+                        await relogin();
+                    }
                     return;
                 }
-                const reversed = [...data].reverse();
-                box.innerHTML = reversed.map(m => `
-                    <div class="msg-item" onclick="viewMail('${m.id}', '${escapeHtml(m.subject || '无主题')}')">
-                        <div class="msg-meta">✉️ 来自: ${escapeHtml(m.from?.address || '未知')} · ${new Date(m.receivedAt).toLocaleTimeString()}</div>
-                        <div class="msg-subject">${escapeHtml(m.subject || '（无主题）')}</div>
-                        <div style="font-size:0.8rem; color:var(--text-secondary-light); margin-top: 8px; opacity:0.9;">✨ ${escapeHtml(m.preview || '轻触卡片阅读完整内容')} ✨</div>
-                    </div>
-                `).join('');
-            } catch (e) {
-                // 静默失败
+                const data = await res.json();
+                const messages = data['hydra:member'] || [];
+                if (messages.length) {
+                    renderMessages(messages);
+                } else {
+                    if (listContainer.querySelector('.msg-item') === null) {
+                        setEmptyList();
+                    }
+                }
+            } catch (err) {
+                console.warn("fetch messages err", err);
             }
         }
 
-        // 简易XSS防护
+        // 重新登录 (令牌刷新)
+        async function relogin() {
+            if (!currentAccount.address || !currentAccount.password) return false;
+            try {
+                const tokenRes = await fetch(`${API_BASE}/token`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        address: currentAccount.address,
+                        password: currentAccount.password
+                    })
+                });
+                if (tokenRes.ok) {
+                    const tokenData = await tokenRes.json();
+                    currentAccount.token = tokenData.token;
+                    return true;
+                }
+            } catch(e) {}
+            return false;
+        }
+
+        // 获取邮件详细内容
+        async function fetchMailDetail(messageId) {
+            if (!currentAccount.token) {
+                showToast("邮箱尚未就绪", true);
+                return;
+            }
+            modal.style.display = 'flex';
+            modalBody.innerHTML = '<div style="text-align:center;padding:40px;">🌀 解读信件中 ...</div>';
+            modalSubject.innerText = "加载详情...";
+            try {
+                const res = await fetch(`${API_BASE}/messages/${messageId}`, {
+                    headers: { 'Authorization': `Bearer ${currentAccount.token}` }
+                });
+                if (!res.ok) throw new Error("无法获取邮件");
+                const detail = await res.json();
+                modalSubject.innerText = detail.subject || "邮件内容";
+                let content = "";
+                if (detail.html && detail.html.length) {
+                    content = detail.html[0];
+                } else if (detail.text) {
+                    content = `<div style="white-space: pre-wrap; font-family: -apple-system;">${escapeHtml(detail.text)}</div>`;
+                } else {
+                    content = "<div>✨ 这封邮件没有正文，但饱含灵感 ✨</div>";
+                }
+                modalBody.innerHTML = content;
+            } catch (err) {
+                modalBody.innerHTML = '<div style="text-align:center;padding:40px;">❌ 读取失败，轻触重试或关闭</div>';
+                console.error(err);
+            }
+        }
+
+        // 简易防XSS
         function escapeHtml(str) {
             if (!str) return '';
             return str.replace(/[&<>]/g, function(m) {
@@ -496,102 +622,132 @@
                 if (m === '<') return '&lt;';
                 if (m === '>') return '&gt;';
                 return m;
-            }).replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, function(c) {
-                return c;
             });
         }
 
-        // 查看邮件详情 (玻璃弹窗)
-        async function viewMail(msgId, subject) {
-            const modal = document.getElementById('mailModal');
-            const mBody = document.getElementById('modalBody');
-            const mSub = document.getElementById('modalSubject');
-            mSub.innerText = subject || '邮件内容';
-            mBody.innerHTML = '<div style="text-align:center;padding:40px;">🌀 正在取回信件内容 ...</div>';
-            modal.style.display = 'flex';
-            if (!mid) {
-                mBody.innerHTML = '<div style="text-align:center;padding:40px;">⚠️ 邮箱未就绪，请稍后重试</div>';
+        // 核心：创建全新临时邮箱
+        async function createNewMailbox() {
+            try {
+                // 获取可用域名
+                const domainRes = await fetch(`${API_BASE}/domains`);
+                const domainsData = await domainRes.json();
+                const domain = domainsData['hydra:member'][0]?.domain;
+                if (!domain) throw new Error("无法获取域名");
+
+                const randomUser = Math.random().toString(36).substring(2, 14) + Date.now().toString(36);
+                const password = Math.random().toString(36) + Math.random().toString(36);
+                const address = `${randomUser}@${domain}`;
+
+                // 创建账户
+                const createRes = await fetch(`${API_BASE}/accounts`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ address, password })
+                });
+                if (!createRes.ok) {
+                    const errMsg = await createRes.text();
+                    throw new Error(`创建账户失败: ${errMsg}`);
+                }
+
+                // 获取 token
+                const tokenRes = await fetch(`${API_BASE}/token`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ address, password })
+                });
+                if (!tokenRes.ok) throw new Error("获取 token 失败");
+                const tokenData = await tokenRes.json();
+
+                return { address, password, token: tokenData.token };
+            } catch (err) {
+                console.error("create mailbox error:", err);
+                throw err;
+            }
+        }
+
+        // 初始化 / 更换邮箱入口
+        async function initMail(showReplaceMsg = true) {
+            if (isRefreshing) return;
+            isRefreshing = true;
+            stopPolling();
+
+            addrEl.innerText = "✨ 正在铸造玻璃邮箱 ✨";
+            setEmptyList("⚡ 生成全新临时地址中...");
+
+            try {
+                const newAccount = await createNewMailbox();
+                currentAccount = newAccount;
+                addrEl.innerText = currentAccount.address;
+                // 首次拉取邮件
+                await fetchMessages();
+                // 启动轮询 (5s)
+                if (pollInterval) clearInterval(pollInterval);
+                pollInterval = setInterval(() => fetchMessages(), 5000);
+                if (showReplaceMsg) showToast("✨ 新邮箱已就绪，复制即用");
+            } catch (err) {
+                console.error(err);
+                addrEl.innerText = "⚠️ 生成失败，请检查网络后更换地址";
+                setEmptyList("❌ 服务暂时波动，点击「更换地址」重试");
+                showToast("连接 mail.tm 失败，请稍后重试", true);
+            } finally {
+                isRefreshing = false;
+            }
+        }
+
+        // 手动更换地址（完全重置）
+        async function replaceMail() {
+            if (isRefreshing) {
+                showToast("正在更换中，请稍后", true);
                 return;
             }
-            try {
-                const r = await fetch(`${PROXY}/mailboxes/${mid}/messages/${msgId}`, {
-                    headers: { 'X-API-Key': API_KEY }
-                });
-                if (!r.ok) throw new Error();
-                const { data } = await r.json();
-                let content = '';
-                if (data.html) {
-                    content = data.html;
-                } else if (data.text) {
-                    content = `<div style="white-space: pre-wrap; font-family: -apple-system;">${escapeHtml(data.text)}</div>`;
-                } else {
-                    content = '<div>✨ 这封邮件似乎只有元数据，但意境已达 ✨</div>';
-                }
-                mBody.innerHTML = content;
-            } catch (err) {
-                mBody.innerHTML = '<div style="text-align:center;padding:40px;">❌ 拉取详情失败，可能是网络波动，点击关闭再试～</div>';
+            await initMail(true);
+        }
+
+        // 复制当前邮箱地址
+        function copyCurrentAddress() {
+            if (!currentAccount.address || currentAccount.address.includes("铸造")) {
+                showToast("邮箱尚未生成，请稍后重试", true);
+                return;
             }
+            navigator.clipboard.writeText(currentAccount.address).then(() => {
+                showToast("✨ 卡卡的西邮箱地址已复制 ✨");
+            }).catch(() => {
+                showToast("手动复制吧: " + currentAccount.address);
+            });
         }
 
-        function closeMail() {
-            document.getElementById('mailModal').style.display = 'none';
+        // 关闭模态框
+        function closeModal() {
+            modal.style.display = 'none';
         }
 
-        function copyMail() {
-            const val = document.getElementById('addr').innerText;
-            if (val && val.includes('@') && val !== '初始化服务中...' && !val.includes('⚠️')) {
-                navigator.clipboard.writeText(val).then(() => {
-                    const tip = document.createElement('div');
-                    tip.innerText = '✨ 地址已复制，阅后即焚 ✨';
-                    tip.style.position = 'fixed';
-                    tip.style.bottom = '100px';
-                    tip.style.left = '50%';
-                    tip.style.transform = 'translateX(-50%)';
-                    tip.style.backgroundColor = 'rgba(0,0,0,0.7)';
-                    tip.style.backdropFilter = 'blur(20px)';
-                    tip.style.color = 'white';
-                    tip.style.padding = '10px 20px';
-                    tip.style.borderRadius = '40px';
-                    tip.style.fontSize = '14px';
-                    tip.style.zIndex = '999';
-                    tip.style.fontWeight = '500';
-                    document.body.appendChild(tip);
-                    setTimeout(() => tip.remove(), 1800);
-                }).catch(() => alert("复制失败，手动选取复制吧"));
-            } else {
-                alert("邮箱地址未生成，请等待或点击更换地址");
-            }
-        }
-
-        // 主题切换
-        const themeBtn = document.getElementById('themeToggle');
-        themeBtn.onclick = () => {
+        // ----- 夜间模式切换 (保持通透感)-----
+        themeToggle.addEventListener('click', () => {
             document.body.classList.toggle('dark');
             const isDark = document.body.classList.contains('dark');
-            themeBtn.textContent = isDark ? '☀️' : '🌙';
-        };
-
-        // 自动刷新邮件 (每5秒)
-        let refreshInterval = null;
-        function startAutoRefresh() {
-            if (refreshInterval) clearInterval(refreshInterval);
-            refreshInterval = setInterval(() => {
-                if (mid && !isInitializing) {
-                    refreshMessages();
-                }
-            }, 4800);
-        }
-
-        // 页面加载启动
-        window.addEventListener('DOMContentLoaded', () => {
-            init(3);
-            startAutoRefresh();
+            themeToggle.textContent = isDark ? '☀️' : '🌙';
         });
 
-        window.resetAndInit = resetAndInit;
-        window.copyMail = copyMail;
-        window.viewMail = viewMail;
-        window.closeMail = closeMail;
+        // ----- 绑定UI事件 -----
+        copyBtn.addEventListener('click', copyCurrentAddress);
+        refreshBtn.addEventListener('click', replaceMail);
+        closeModalBtn.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
+        });
+
+        // 页面启动，创建邮箱
+        window.addEventListener('DOMContentLoaded', () => {
+            initMail(true);
+        });
+
+        // 页面关闭前清除轮询
+        window.addEventListener('beforeunload', () => {
+            if (pollInterval) clearInterval(pollInterval);
+        });
+
+        // 暴露部分调试不用，但保留优雅错误恢复
+        window.replaceMail = replaceMail;
     </script>
 </body>
 </html>
